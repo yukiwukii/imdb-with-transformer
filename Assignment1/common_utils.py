@@ -133,19 +133,19 @@ class EarlyStopper:
 
 
 class MLP(nn.Module):
-    def __init__(self, no_features, no_hidden, no_labels, drop_out):
+    def __init__(self, no_features, no_hidden1, drop_out, no_hidden2=128, no_hidden3=128, no_labels=1):
         super(MLP, self).__init__()
         self.relu_stack = nn.Sequential(
-            nn.Linear(no_features, no_hidden),
+            nn.Linear(no_features, no_hidden1),
             nn.ReLU(),
             nn.Dropout(p=drop_out),
-            nn.Linear(no_hidden, no_hidden),
+            nn.Linear(no_hidden1, no_hidden2),
             nn.ReLU(),
             nn.Dropout(p=drop_out),
-            nn.Linear(no_hidden, no_hidden),
+            nn.Linear(no_hidden2, no_hidden3),
             nn.ReLU(),
             nn.Dropout(p=drop_out),
-            nn.Linear(no_hidden, no_labels),
+            nn.Linear(no_hidden3, no_labels),
             nn.Sigmoid()
         )
 
