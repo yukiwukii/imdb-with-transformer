@@ -152,3 +152,52 @@ class MLP(nn.Module):
     def forward(self, x):
         logits = self.relu_stack(x)
         return logits
+    
+class MyDataset(Dataset):
+    def __init__(self, X, y):
+        self.X = torch.tensor(X, dtype=torch.float)
+        self.y = torch.tensor(y, dtype=torch.float).unsqueeze(1)
+
+    def __len__(self):
+        return len(self.y)
+    
+    def __getitem__(self, idx):
+        return self.X[idx], self.y[idx]
+    
+def train_loop(dataloader, model, loss_fn, optimizer):
+    size = len(dataloader.dataset)
+    num_batches = len(dataloader)
+    train_loss, train_correct = 0, 0
+    for batch, (X, y) in enumerate(dataloader):
+        pred = model(X)
+        loss = loss_fn(pred, y)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        train_loss += loss.item()
+        train_correct += ((pred > 0.5).float() == y).all(dim=1).sum().item()
+    
+    train_loss /= size
+    train_correct /= size
+
+    return train_loss, train_correct
+
+
+def test_loop(dataloader, model, loss_fn):
+    size = len(dataloader.dataset)
+    test_loss, test_correct = 0, 0
+
+    with torch.no_grad():
+        for batch, (X, y) in enumerate(dataloader):
+            pred = model(X)
+            loss = loss_fn(pred, y)
+
+            test_loss += loss.item()
+            test_correct += ((pred > 0.5).float() == y).all(dim=1).sum().item()
+
+    test_loss /= size
+    test_correct /= size
+
+    return test_loss, test_correct
