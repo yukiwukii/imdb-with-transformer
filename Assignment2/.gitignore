@@ -1,0 +1,19 @@
+# Ignore everything in the model directory
+model/
+
+# Common files to ignore
+.DS_Store
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+.venv
+env/
+venv/
+ENV/
+.idea/
+.vscode/
+*.swp
+*.swo
+.ipynb_checkpoints
