@@ -73,7 +73,7 @@ def evaluate_model(model_name, dataset_name="imdb", num_samples=100):
     dataset = load_dataset(dataset_name, split='test')
     
     # Select samples
-    test_samples = dataset.select(range(min(num_samples, len(dataset))))
+    test_samples = dataset.shuffle(seed=42).select(range(min(num_samples, len(dataset))))
     
     print(f"Evaluating {model_name} on {len(test_samples)} samples from {dataset_name}...")
     
@@ -98,7 +98,6 @@ def evaluate_model(model_name, dataset_name="imdb", num_samples=100):
             results.append({
                 'id': i,
                 'full_text': text,  # Store the complete text
-                'text_preview': text[:100] + '...' if len(text) > 100 else text,
                 'true_label': true_label,
                 'predicted_label': predicted_label,
                 'justification': justification  # Store the model's justification
@@ -108,7 +107,6 @@ def evaluate_model(model_name, dataset_name="imdb", num_samples=100):
             results.append({
                 'id': i,
                 'full_text': text,  # Store the complete text
-                'text_preview': text[:100] + '...' if len(text) > 100 else text,
                 'true_label': true_label,
                 'predicted_label': 'FAILED',
                 'justification': justification  # Store the error message or response
@@ -156,13 +154,13 @@ def evaluate_model(model_name, dataset_name="imdb", num_samples=100):
     filename = f"results/{model_name.replace(':', '_')}_{num_samples}_samples.csv"
     results_df.to_csv(filename, index=False)
     
-    # Save metrics
-    metrics_df = pd.DataFrame([metrics])
-    metrics_filename = f"results/{model_name.replace(':', '_')}_{num_samples}_metrics.csv"
-    metrics_df.to_csv(metrics_filename, index=False)
+    # # Save metrics
+    # metrics_df = pd.DataFrame([metrics])
+    # metrics_filename = f"results/{model_name.replace(':', '_')}_{num_samples}_metrics.csv"
+    # metrics_df.to_csv(metrics_filename, index=False)
     
     print(f"Results saved to {filename}")
-    print(f"Metrics saved to {metrics_filename}")
+    # print(f"Metrics saved to {metrics_filename}")
     
     return metrics
 
@@ -210,10 +208,10 @@ def evaluate_models(models, dataset_name="imdb", num_samples=100):
 
 def main():
     # List of models to evaluate
-    models = ['llama3.2:1b', 'llama3.2:3b', 'llama3.1:7b']
+    models = ['llama3.2:1b', 'llama3.2:3b', 'llama3.1:8b']
     
     # Number of samples to test
-    num_samples = 1000
+    num_samples = 5000
     
     print(f"Starting sentiment analysis on {num_samples} samples")
     

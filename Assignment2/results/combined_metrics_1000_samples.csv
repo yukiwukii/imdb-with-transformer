@@ -1,4 +1,0 @@
-model,accuracy,precision,recall,f1_score,true_positive,false_positive,true_negative,false_negative,failed_count,total_processed,failure_rate
-llama3.2:1b,0.835506519558676,0.0,0.0,0.0,0,164,833,0,3,1000,0.003
-llama3.2:3b,0.7525050100200401,0.0,0.0,0.0,0,247,751,0,2,1000,0.002
-llama3.1:7b,0.0,0.0,0.0,0.0,0,0,0,0,1000,1000,1.0
