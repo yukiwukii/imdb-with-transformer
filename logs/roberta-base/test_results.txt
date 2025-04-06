@@ -1,0 +1,15 @@
+Model: roberta-base
+Evaluation completed at: 2025-04-09 03:19:08
+
+Test metrics:
+accuracy: 0.94912
+f1: 0.949806645095099
+precision: 0.9371593209780408
+recall: 0.9628
+
+Confusion Matrix:
+Saved to: ./logs/roberta-base/figures/confusion_matrix.png
+
+Raw confusion matrix values:
+[[11693   807]
+ [  465 12035]]

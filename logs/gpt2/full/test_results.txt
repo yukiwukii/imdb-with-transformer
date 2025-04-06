@@ -1,0 +1,16 @@
+Model: gpt2
+Finetuning method: full
+Evaluation completed at: 2025-04-08 16:09:06
+
+Test metrics:
+accuracy: 0.93944
+f1: 0.9395753512132823
+precision: 0.9374800892003823
+recall: 0.94168
+
+Confusion Matrix:
+Saved to: ./logs/gpt2/full/figures/confusion_matrix.png
+
+Raw confusion matrix values:
+[[11715   785]
+ [  729 11771]]
