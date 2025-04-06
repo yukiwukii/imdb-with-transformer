@@ -15,13 +15,20 @@ import optuna
 import matplotlib.pyplot as plt
 import pandas as pd
 from collections import Counter
+from dotenv import load_dotenv
 from huggingface_hub import login
 
-login("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")
+# Load your HF token from .env file
+load_dotenv()
+token = os.getenv("HF_TOKEN")
+login(token)
+
+# Model to finetune
+model_name = "hf_og"
 
 # Create directories
-os.makedirs("./hyperparameter_tuning/hf_og", exist_ok=True)
-os.makedirs("./hyperparameter_plots/hf_og", exist_ok=True)
+os.makedirs(f"./hyperparameter_tuning/{model_name}", exist_ok=True)
+os.makedirs(f"./hyperparameter_plots/{model_name}", exist_ok=True)
 
 imdb = load_dataset("imdb")
 
@@ -75,7 +82,7 @@ def objective(trial):
     
     # Define training arguments
     training_args = TrainingArguments(
-        output_dir=f"./hyperparameter_tuning/hf_pro/trial_{trial.number}",
+        output_dir=f"./hyperparameter_tuning/{model_name}/trial_{trial.number}",
         learning_rate=learning_rate,
         per_device_train_batch_size=batch_size,
         per_device_eval_batch_size=batch_size,
@@ -85,7 +92,7 @@ def objective(trial):
         save_strategy="epoch",
         load_best_model_at_end=True,
         warmup_ratio=warmup_ratio,
-        logging_dir=f"./hyperparameter_tuning/hf_pro/logs/trial_{trial.number}",
+        logging_dir=f"./hyperparameter_tuning/{model_name}/logs/trial_{trial.number}",
         report_to="none",  # Disable wandb/tensorboard to avoid clutter
     )
     
@@ -124,7 +131,7 @@ def visualize_study_with_matplotlib(study):
     ax.set_title("Hyperparameter Optimization History")
     ax.grid(True)
     fig.tight_layout()
-    fig.savefig("./hyperparameter_plots/optimization_history.png")
+    fig.savefig(f"./hyperparameter_plots/{model_name}/optimization_history.png")
     
     # Plot parameter importances and get top params for pairwise plotting
     top_params = []
@@ -143,7 +150,7 @@ def visualize_study_with_matplotlib(study):
         ax.set_title("Hyperparameter Importance")
         ax.set_xlim(0, 1)
         fig.tight_layout()
-        fig.savefig("./hyperparameter_plots/parameter_importance.png")
+        fig.savefig(f"./hyperparameter_plots/{model_name}/parameter_importance.png")
     except Exception as e:
         print(f"Could not compute parameter importances: {e}")
     
@@ -161,7 +168,7 @@ def visualize_study_with_matplotlib(study):
             if param == "learning_rate":
                 ax.set_xscale("log")
             fig.tight_layout()
-            fig.savefig(f"./hyperparameter_plots/param_{param}.png")
+            fig.savefig(f"./hyperparameter_plots/{model_name}/param_{param}.png")
     
     # Plot pairwise relationship for most important parameters if available
     if len(top_params) >= 2:
@@ -183,7 +190,7 @@ def visualize_study_with_matplotlib(study):
                 ax.set_yscale("log")
             fig.colorbar(scatter, label="Accuracy")
             fig.tight_layout()
-            fig.savefig("./hyperparameter_plots/top_params_relationship.png")
+            fig.savefig(f"./hyperparameter_plots/{model_name}/top_params_relationship.png")
         except Exception as e:
             print(f"Error creating pairwise plot: {e}")
 
@@ -209,7 +216,7 @@ def main(n_trials=10):
     visualize_study_with_matplotlib(study)
     
     # Find the best checkpoint path
-    base_path = f"./hyperparameter_tuning/hf_pro/trial_{best_trial.number}"
+    base_path = f"./hyperparameter_tuning/{model_name}/trial_{best_trial.number}"
     best_checkpoint_path = None
     
     if os.path.exists(base_path):
