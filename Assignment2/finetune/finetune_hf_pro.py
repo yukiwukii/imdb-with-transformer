@@ -15,6 +15,12 @@ import optuna
 import matplotlib.pyplot as plt
 import pandas as pd
 from collections import Counter
+from huggingface_hub import login
+
+# Load your HF token from .env file
+load_dotenv()
+token = os.getenv("HF_TOKEN")
+login(token)
 
 # Create directories
 os.makedirs("./hyperparameter_tuning/hf_pro", exist_ok=True)
@@ -256,7 +262,7 @@ def main(n_trials=10):
 
 if __name__ == "__main__":
     # Set the number of trials - increase for better results
-    n_trials = 2  # Adjust based on available computation time
+    n_trials = 10  # Adjust based on available computation time
     
     # Run the hyperparameter tuning
     best_model_path, best_params, final_results = main(n_trials=n_trials)
