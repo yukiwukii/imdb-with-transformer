@@ -1,0 +1,11 @@
+Model: roberta-base
+Training completed at: 2025-04-09 03:16:31
+Training time: 0h 36m 0.31s
+
+Training metrics:
+train_runtime: 2159.5324
+train_samples_per_second: 46.306
+train_steps_per_second: 2.894
+total_flos: 2.6311105536e+16
+train_loss: 0.1181353673171997
+epoch: 5.0
