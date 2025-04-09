@@ -1,0 +1,12 @@
+Model: bert-base-cased
+Finetuning method: lora
+Training completed at: 2025-04-08 19:50:10
+Training time: 1h 11m 8.81s
+
+Training metrics:
+train_runtime: 4268.2023
+train_samples_per_second: 29.286
+train_steps_per_second: 1.831
+total_flos: 3.3059341824e+16
+train_loss: 0.2778466230771973
+epoch: 5.0
