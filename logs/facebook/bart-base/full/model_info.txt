@@ -1,4 +1,4 @@
 Model: facebook/bart-base
 Used pre-trained model from: ./models/facebook/bart-base/full/final_model
-Model loaded at: 2025-04-09 07:43:30
+Model loaded at: 2025-04-09 17:48:28
 Finetuning method: full
