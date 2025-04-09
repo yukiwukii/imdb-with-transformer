@@ -1,0 +1,14 @@
+Evaluation completed at: 2025-04-09 17:59:40
+
+Test metrics:
+accuracy: 0.94504
+f1: 0.9457217350082958
+precision: 0.934134540346496
+recall: 0.9576
+
+Confusion Matrix:
+Saved to: ./logs/facebook/bart-base/full/figures/confusion_matrix.png
+
+Raw confusion matrix values:
+[[11656   844]
+ [  530 11970]]
