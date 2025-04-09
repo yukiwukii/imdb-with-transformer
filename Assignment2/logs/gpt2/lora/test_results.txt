@@ -1,0 +1,16 @@
+Model: gpt2
+Finetuning method: lora
+Evaluation completed at: 2025-04-08 16:46:34
+
+Test metrics:
+accuracy: 0.91552
+f1: 0.9147080203537679
+precision: 0.9235850595335182
+recall: 0.906
+
+Confusion Matrix:
+Saved to: ./logs/gpt2/lora/figures/confusion_matrix.png
+
+Raw confusion matrix values:
+[[11563   937]
+ [ 1175 11325]]
