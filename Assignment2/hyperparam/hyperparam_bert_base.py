@@ -24,7 +24,7 @@ token = os.getenv("HF_TOKEN")
 login(token)
 
 # Model to finetune
-model_name = "hf_og"
+model_name = "bert-base"
 
 # Create directories
 os.makedirs(f"./hyperparameter_tuning/{model_name}", exist_ok=True)
@@ -64,7 +64,7 @@ def model_init():
     id2label = {0: "NEGATIVE", 1: "POSITIVE"}
     label2id = {"NEGATIVE": 0, "POSITIVE": 1}
     model = AutoModelForSequenceClassification.from_pretrained(
-        "distilbert/distilbert-base-uncased", num_labels=2, id2label=id2label, label2id=label2id
+        "google-bert/bert-base-cased", num_labels=2, id2label=id2label, label2id=label2id
     )
     return model
 
@@ -75,10 +75,7 @@ def objective(trial):
     batch_size = trial.suggest_categorical("batch_size", [8, 16, 32])
     weight_decay = trial.suggest_float("weight_decay", 0.01, 0.1)
     warmup_ratio = trial.suggest_float("warmup_ratio", 0.0, 0.1)
-    patience = trial.suggest_float("patience", 1, 3)
-    num_epochs = 5
-
-    early_stopping_callback = EarlyStoppingCallback(early_stopping_patience=patience)
+    num_epochs = 2
     
     # Define training arguments
     training_args = TrainingArguments(
@@ -105,7 +102,6 @@ def objective(trial):
         tokenizer=tokenizer,
         data_collator=data_collator,
         compute_metrics=compute_metrics,
-        callbacks=[early_stopping_callback],
     )
     
     # Train and evaluate
@@ -195,7 +191,7 @@ def visualize_study_with_matplotlib(study):
             print(f"Error creating pairwise plot: {e}")
 
 # Main function
-def main(n_trials=10):
+def main(n_trials=20):
     print(f"Starting hyperparameter tuning with {n_trials} trials...")
     
     # Create and run the study
@@ -267,7 +263,7 @@ def main(n_trials=10):
 
 if __name__ == "__main__":
     # Set the number of trials - increase for better results
-    n_trials = 10  # Adjust based on available computation time
+    n_trials = 20  # Adjust based on available computation time
     
     # Run the hyperparameter tuning
     best_model_path, best_params, final_results = main(n_trials=n_trials)

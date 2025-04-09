@@ -1,5 +1,6 @@
 # Ignore everything in the model directory
-model/
+models/
+hyperparameter_tuning/
 
 # Common files to ignore
 .DS_Store
