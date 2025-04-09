@@ -1,0 +1,11 @@
+Model: wes-bert
+Training completed at: 2025-04-09 11:01:42
+Training time: 0h 18m 59.17s
+
+Training metrics:
+train_runtime: 1138.2085
+train_samples_per_second: 87.857
+train_steps_per_second: 5.491
+total_flos: 1.32467398656e+16
+train_loss: 0.13916142795562744
+epoch: 5.0
