@@ -7,17 +7,28 @@ from transformers import (
     AutoModelForSequenceClassification,
     TrainingArguments,
     Trainer,
-    DataCollatorWithPadding
+    DataCollatorWithPadding,
+    EarlyStoppingCallback
 )
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 import optuna
 import matplotlib.pyplot as plt
 import pandas as pd
 from collections import Counter
+from dotenv import load_dotenv
+from huggingface_hub import login
+
+# Load your HF token from .env file
+load_dotenv()
+token = os.getenv("HF_TOKEN")
+login(token)
+
+# Model to finetune
+model_name = "wes_bert"
 
 # Create directories
-os.makedirs("./hyperparameter_tuning", exist_ok=True)
-os.makedirs("./hyperparameter_plots", exist_ok=True)
+os.makedirs(f"./hyperparameter_tuning/{model_name}", exist_ok=True)
+os.makedirs(f"./hyperparameter_plots/{model_name}", exist_ok=True)
 
 imdb = load_dataset("imdb")
 
@@ -28,6 +39,12 @@ tokenized_imdb = imdb.map(lambda e: tokenizer(e["text"], truncation=True, paddin
 
 # Prepare data collator
 data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
+
+# Split train/val/test set
+train_val_split = tokenized_imdb["train"].train_test_split(test_size = 0.2)
+train_split = train_val_split["train"]
+val_split = train_val_split["test"]
+test_split = tokenized_imdb["test"]
 
 # Define metrics computation
 def compute_metrics(eval_pred):
@@ -56,12 +73,15 @@ def objective(trial):
     learning_rate = trial.suggest_float("learning_rate", 1e-5, 5e-5, log=True)
     batch_size = trial.suggest_categorical("batch_size", [8, 16, 32])
     weight_decay = trial.suggest_float("weight_decay", 0.01, 0.1)
-    num_epochs = trial.suggest_int("num_epochs", 2, 5)
     warmup_ratio = trial.suggest_float("warmup_ratio", 0.0, 0.1)
+    patience = trial.suggest_float("patience", 1, 3)
+    num_epochs = 5
+
+    early_stopping_callback = EarlyStoppingCallback(early_stopping_patience=patience)
     
     # Define training arguments
     training_args = TrainingArguments(
-        output_dir=f"./hyperparameter_tuning/trial_{trial.number}",
+        output_dir=f"./hyperparameter_tuning/{model_name}/trial_{trial.number}",
         learning_rate=learning_rate,
         per_device_train_batch_size=batch_size,
         per_device_eval_batch_size=batch_size,
@@ -71,7 +91,7 @@ def objective(trial):
         save_strategy="epoch",
         load_best_model_at_end=True,
         warmup_ratio=warmup_ratio,
-        logging_dir=f"./hyperparameter_tuning/logs/trial_{trial.number}",
+        logging_dir=f"./hyperparameter_tuning/{model_name}/logs/trial_{trial.number}",
         report_to="none",  # Disable wandb/tensorboard to avoid clutter
     )
     
@@ -79,11 +99,12 @@ def objective(trial):
     trainer = Trainer(
         model_init=model_init,
         args=training_args,
-        train_dataset = tokenized_imdb["train"].shuffle(seed=42),
-        eval_dataset = tokenized_imdb["test"].shuffle(seed=42),
+        train_dataset=train_split,
+        eval_dataset=val_split,
         tokenizer=tokenizer,
         data_collator=data_collator,
         compute_metrics=compute_metrics,
+        callbacks=[early_stopping_callback],
     )
     
     # Train and evaluate
@@ -109,7 +130,7 @@ def visualize_study_with_matplotlib(study):
     ax.set_title("Hyperparameter Optimization History")
     ax.grid(True)
     fig.tight_layout()
-    fig.savefig("./hyperparameter_plots/optimization_history.png")
+    fig.savefig(f"./hyperparameter_plots/{model_name}/optimization_history.png")
     
     # Plot parameter importances and get top params for pairwise plotting
     top_params = []
@@ -128,12 +149,12 @@ def visualize_study_with_matplotlib(study):
         ax.set_title("Hyperparameter Importance")
         ax.set_xlim(0, 1)
         fig.tight_layout()
-        fig.savefig("./hyperparameter_plots/parameter_importance.png")
+        fig.savefig(f"./hyperparameter_plots/{model_name}/parameter_importance.png")
     except Exception as e:
         print(f"Could not compute parameter importances: {e}")
     
     # Plot each parameter individually
-    param_names = ["learning_rate", "batch_size", "weight_decay", "num_epochs", "warmup_ratio"]
+    param_names = ["learning_rate", "batch_size", "weight_decay", "patience", "warmup_ratio"]
     for param in param_names:
         param_col = f"params_{param}"
         if param_col in trials_df.columns:
@@ -146,7 +167,7 @@ def visualize_study_with_matplotlib(study):
             if param == "learning_rate":
                 ax.set_xscale("log")
             fig.tight_layout()
-            fig.savefig(f"./hyperparameter_plots/param_{param}.png")
+            fig.savefig(f"./hyperparameter_plots/{model_name}/param_{param}.png")
     
     # Plot pairwise relationship for most important parameters if available
     if len(top_params) >= 2:
@@ -168,7 +189,7 @@ def visualize_study_with_matplotlib(study):
                 ax.set_yscale("log")
             fig.colorbar(scatter, label="Accuracy")
             fig.tight_layout()
-            fig.savefig("./hyperparameter_plots/top_params_relationship.png")
+            fig.savefig(f"./hyperparameter_plots/{model_name}/top_params_relationship.png")
         except Exception as e:
             print(f"Error creating pairwise plot: {e}")
 
@@ -194,7 +215,7 @@ def main(n_trials=10):
     visualize_study_with_matplotlib(study)
     
     # Find the best checkpoint path
-    base_path = f"./hyperparameter_tuning/trial_{best_trial.number}"
+    base_path = f"./hyperparameter_tuning/{model_name}/trial_{best_trial.number}"
     best_checkpoint_path = None
     
     if os.path.exists(base_path):
@@ -228,7 +249,7 @@ def main(n_trials=10):
                 model=best_model,
                 args=eval_args,
                 tokenizer=tokenizer,
-                eval_dataset=tokenized_imdb["test"],
+                eval_dataset=test_split,
                 data_collator=data_collator,
                 compute_metrics=compute_metrics
             )

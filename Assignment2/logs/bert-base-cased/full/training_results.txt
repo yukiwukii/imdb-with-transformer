@@ -1,0 +1,12 @@
+Model: bert-base-cased
+Finetuning method: full
+Training completed at: 2025-04-08 02:34:18
+Training time: 0h 55m 30.17s
+
+Training metrics:
+train_runtime: 3327.77
+train_samples_per_second: 30.05
+train_steps_per_second: 1.878
+total_flos: 2.6311105536e+16
+train_loss: 0.11924827857971192
+epoch: 5.0
