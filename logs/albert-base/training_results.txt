@@ -1,0 +1,11 @@
+Model: albert-base
+Training completed at: 2025-04-09 03:37:27
+Training time: 0h 39m 36.75s
+
+Training metrics:
+train_runtime: 2375.9733
+train_samples_per_second: 42.088
+train_steps_per_second: 2.631
+total_flos: 2389810176000000.0
+train_loss: 0.1344782752418518
+epoch: 5.0

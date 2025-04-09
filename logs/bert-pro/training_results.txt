@@ -1,0 +1,11 @@
+Model: bert-pro
+Training completed at: 2025-04-09 01:50:15
+Training time: 0h 36m 9.98s
+
+Training metrics:
+train_runtime: 2168.9795
+train_samples_per_second: 46.105
+train_steps_per_second: 2.882
+total_flos: 2.6311105536e+16
+train_loss: 0.08516788406014443
+epoch: 5.0

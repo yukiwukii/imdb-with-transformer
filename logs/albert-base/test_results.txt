@@ -1,0 +1,15 @@
+Model: albert-base
+Evaluation completed at: 2025-04-09 03:40:28
+
+Test metrics:
+accuracy: 0.93876
+f1: 0.9393495226399398
+precision: 0.9303931570273876
+recall: 0.94848
+
+Confusion Matrix:
+Saved to: ./logs/albert-base/figures/confusion_matrix.png
+
+Raw confusion matrix values:
+[[11613   887]
+ [  644 11856]]
