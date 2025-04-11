@@ -1,0 +1,15 @@
+Model: bert-pro
+Evaluation completed at: 2025-04-09 21:02:23
+
+Test metrics:
+accuracy: 0.94368
+f1: 0.9448621553884712
+precision: 0.9254372506903958
+recall: 0.96512
+
+Confusion Matrix:
+Saved to: ./logs/bert-pro/figures/confusion_matrix.png
+
+Raw confusion matrix values:
+[[11528   972]
+ [  436 12064]]

@@ -1,0 +1,16 @@
+Model: bert-base-cased
+Finetuning method: lora
+Evaluation completed at: 2025-04-08 19:54:17
+
+Test metrics:
+accuracy: 0.91252
+f1: 0.9138196004255822
+precision: 0.9004426496854857
+recall: 0.9276
+
+Confusion Matrix:
+Saved to: ./logs/bert-base-cased/lora/figures/confusion_matrix.png
+
+Raw confusion matrix values:
+[[11218  1282]
+ [  905 11595]]

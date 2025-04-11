@@ -1,0 +1,12 @@
+Model: gpt2
+Finetuning method: lora
+Training completed at: 2025-04-08 16:43:21
+Training time: 0:33:50
+
+Training metrics:
+train_runtime: 2029.7573
+train_samples_per_second: 49.267
+train_steps_per_second: 3.079
+total_flos: 2.6379288576e+16
+train_loss: 0.3651030094909668
+epoch: 5.0

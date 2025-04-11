@@ -1,0 +1,15 @@
+datasets==3.4.1
+huggingface_hub==0.29.3
+matplotlib==3.10.1
+numpy==2.2.4
+ollama==0.4.7
+optuna==4.2.1
+pandas==2.2.3
+peft==0.15.1
+python-dotenv==1.1.0
+scikit_learn==1.6.1
+seaborn==0.13.2
+tokenizers==0.21.1
+torch==2.6.0
+tqdm==4.67.1
+transformers==4.50.0
