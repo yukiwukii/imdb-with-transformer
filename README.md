@@ -31,18 +31,19 @@ Each of our experiment is linked to its corresponding folder:
 | 3. Performance of Different Types of Fine-tuning| `./finetune/peft` |
 | 4. Comparison of Different Transformer Architectures        | `./finetune/architectures`             |
 | 5. Comparison of Different Types of BERT Models           | `./finetune/bert_models`, `./mlm_eval`                           |
-| 6. Domain Adaptation                             | `./pretraining/from_existing/HF_BERT_pro`, `./mlm_eval`                             |
+| 6. Domain Adaptation                             | `./pretraining/from_existing/HF_BERT_pro.py`, `./mlm_eval`                             |
 | 7. Data Augmentation | `./data_augmentation`         |
-| 8. Hyperparameter Tuning |`./hyperparam` |
+| 8. Hyperparameter Tuning |`./hyperparam/hyperparam_bert_base.py` |
 
 **Note**: The serial numbers of the experiments correspond to the sections in the **Report.pdf**. All of our training results are located at `./logs`. The hyperparameter tuning figures can be found at `./hyperparameter_plots`.
 
 ### 3. Additional Code 
 We also provide some extra code that did not make it to the final report due to space constraints:
-- `./llama`, where we ran **LLaMA:1B, LLaMA:3B** and **LLaMA:8B** on the IMDB dataset. The esults can be found at `./llama_results`.
+- `./llama`, where we ran **LLaMA:1B, LLaMA:3B** and **LLaMA:8B** on the IMDB dataset. The results can be found at `./llama_results`.
 - `./pretraining/from_scratch` which contains our implementation of BERT from scratch. The results can be found in `./logs/wes-bert`
 - `./pretraining/from_existing/ALBERT`, which is our domain adaptation attempt for ALBERT. Training ALBERT takes more than 2 days **(You have been warned)**.
 - `./pretraining/from_existing/RoBERTa` contains our domain adaptation implementation for RoBERTa. The results can be found in `./logs/roberta-pro`.
+- `./hyperparam/hyperparam_bert_pro.py` and `./hyperparam/hyperparam_wes_bert.py`, which contains hyperparameter tuning results for bert-pro and wes-bert model respectively.
 - `./.sh` and `./.pbs` are job files for **NTU GPU Cluster** and **NSCC** respectively. You may refer to this, or make your own.
 
 
