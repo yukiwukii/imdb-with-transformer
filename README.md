@@ -39,10 +39,10 @@ Each of our experiment is linked to its corresponding folder:
 
 ### 3. Additional Code 
 We also provide some extra code that did not make it to the final report due to space constraints:
-- `./llama`, where we ran **LLaMA:1B, LLaMA:3B** and **LLaMA:8B** on the IMDB dataset. Results can be found at `./llama_results`.
+- `./llama`, where we ran **LLaMA:1B, LLaMA:3B** and **LLaMA:8B** on the IMDB dataset. The esults can be found at `./llama_results`.
 - `./pretraining/from_scratch` which contains our implementation of BERT from scratch. The results can be found in `./logs/wes-bert`
 - `./pretraining/from_existing/ALBERT`, which is our domain adaptation attempt for ALBERT. Training ALBERT takes more than 2 days **(You have been warned)**.
-- `./pretraining/from_existing/RoBERTa` contains our domain adaptation attempt for RoBERTa. The results can be found in `./logs/roberta-pro`.
+- `./pretraining/from_existing/RoBERTa` contains our domain adaptation implementation for RoBERTa. The results can be found in `./logs/roberta-pro`.
 - `./.sh` and `./.pbs` are job files for **NTU GPU Cluster** and **NSCC** respectively. You may refer to this, or make your own.
 
 
