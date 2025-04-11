@@ -1,0 +1,3 @@
+Model: bert-pro
+Used pre-trained model from: ./models/bert-pro/final_model
+Model loaded at: 2025-04-09 20:59:45

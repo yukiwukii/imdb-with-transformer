@@ -1,15 +1,15 @@
 Model: wes-bert
-Evaluation completed at: 2025-04-09 11:03:10
+Evaluation completed at: 2025-04-10 02:27:05
 
 Test metrics:
-accuracy: 0.9212
-f1: 0.9218067793919187
-precision: 0.9147628801008351
-recall: 0.92896
+accuracy: 0.90752
+f1: 0.906275336468299
+precision: 0.9186390532544378
+recall: 0.89424
 
 Confusion Matrix:
 Saved to: ./logs/wes-bert/figures/confusion_matrix.png
 
 Raw confusion matrix values:
-[[11418  1082]
- [  888 11612]]
+[[11510   990]
+ [ 1322 11178]]

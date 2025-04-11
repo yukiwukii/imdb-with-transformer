@@ -1,12 +1,12 @@
 Model: facebook/bart-base
 Finetuning method: full
-Training completed at: 2025-04-09 01:44:03
-Training time: 1:13:14
+Training completed at: 2025-04-09 19:53:49
+Training time: 0:45:00
 
 Training metrics:
-train_runtime: 4394.3912
-train_samples_per_second: 22.756
-train_steps_per_second: 1.422
+train_runtime: 2699.9264
+train_samples_per_second: 370.38
+train_steps_per_second: 23.149
 total_flos: 3.0668725248e+16
-train_loss: 0.13751505977630615
+train_loss: 0.14148915252685546
 epoch: 5.0
