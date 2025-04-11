@@ -1,12 +1,12 @@
 Model: gpt2
 Finetuning method: full
-Training completed at: 2025-04-08 16:06:02
-Training time: 0:40:37
+Training completed at: 2025-04-09 21:37:58
+Training time: 0:38:32
 
 Training metrics:
-train_runtime: 2434.8089
-train_samples_per_second: 41.071
-train_steps_per_second: 2.567
+train_runtime: 2311.802
+train_samples_per_second: 432.563
+train_steps_per_second: 27.035
 total_flos: 2.61296750592e+16
-train_loss: 0.1640708687210083
+train_loss: 0.16444563575744628
 epoch: 5.0
