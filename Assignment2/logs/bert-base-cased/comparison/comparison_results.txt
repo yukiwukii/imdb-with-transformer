@@ -1,7 +1,0 @@
-Model: bert-base-cased
-Comparison completed at: 2025-04-08 19:54:17
-
-Method     Accuracy   F1 Score   Precision  Recall    
-------------------------------------------------------------
-ia3        0.7273     0.7278     0.7264     0.7292    
-lora       0.9125     0.9138     0.9004     0.9276    

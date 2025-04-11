@@ -1,4 +1,0 @@
-Model: bert-base-cased
-Used pre-trained model from: ./models/bert-base-cased/lora/final_model
-Model loaded at: 2025-04-08 11:39:31
-Finetuning method: lora
