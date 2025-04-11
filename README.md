@@ -1,4 +1,4 @@
-# IMDB Sentiment Analysis - Group Project
+# IMDB Sentiment Analysis
 
 ## Overview
 
