@@ -57,6 +57,6 @@ We also provide some extra code that did not make it to the final report due to 
 - Hyperparameter search using TPE reveals that **higher batch size**, such as 32, **is important** in ensuring higher accuracy, despite conventional wisdom.
 
 **Contributors:**
-1. Nadya Yuki Wangsajaya @yukiwukii
-2. Shiu Lok Chun, Wesley @HamsterW
+1. Nadya Yuki Wangsajaya [@yukiwukii](https://github.com/yukiwukii)
+2. Shiu Lok Chun, Wesley [@HamsterW](https://github.com/HamsterW)
 
